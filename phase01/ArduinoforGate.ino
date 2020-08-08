@@ -1,5 +1,3 @@
-//Arduino for gate control
-
 #include <Servo.h>
 #include <LiquidCrystal.h>
 
@@ -17,6 +15,10 @@ int lastDistance01;
 long updatedebounceTime;
 long debounceTime;
 Servo myGate;
+
+short row, col;
+String message_01 = "Nil Cold Storage";
+String message_02;
 
 
 long readDistance(int triggerPin, int echoPin) {
@@ -69,14 +71,28 @@ void loop() {
   //if((lastDistance00!=distance00)||(lastDistance01 != distance01)){
   //updatedebounceTime = millis();
   //}
+  
+  lcd.clear();
+  lcd.setCursor(row, 0);
+  lcd.print(message_01);
 
   if ((distance00 <= 250) || (distance01 <= 250)) {
     angle = 90;
     updatedebounceTime = millis();
+	row = 0;
+	col = 1;
+	message_02 = "Gate Opening..";
+	lcd.setCursor(row, col);
+	lcd.print(message_02);
   }
   else if (((millis() - updatedebounceTime) >= debounceTime)) {
     if ((distance00 > 250) && (distance01 > 250)) {
       angle = 0;
+	  row = 0;
+	  col = 1;
+	  message_02 = "Gate Closing..";
+	  lcd.setCursor(row, col);
+	  lcd.print(message_02);
     }
   }
 
@@ -85,11 +101,4 @@ void loop() {
 
   lastDistance00 = distance00;
   lastDistance01 = distance01;
-  
-  
-  //Serial.readBytes(txt,16);
-  //Serial.println(txt);
-  lcd.clear();
-  lcd.setCursor(0, 1);
-  lcd.print("Hello World");
 }
