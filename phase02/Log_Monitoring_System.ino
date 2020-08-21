@@ -95,7 +95,7 @@ void loop() {
     row = 0;
 
     message_03 = "Gate Opening..";
-    message_04 = "Opend " + String(doorCounter) + " times";    
+    message_04 = "Opened " + String(doorCounter) + " times";    
   }
   else if((millis() - updatedebounceTime) >= debounceTime) {
     if (((distance00 > 250) && (distance01 > 250))&&(angle== 90)) {
